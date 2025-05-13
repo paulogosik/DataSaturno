@@ -1,28 +1,29 @@
-import db from './users_db';
+import db from './usersdb';
 
 export const criarTabela = () => {
-  db.withTransactionSync((tx: any) => {
-    tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS users (
+  db.withTransactionSync(() => {
+    db.execSync(
+      `CREATE TABLE IF NOT EXISTS tarefas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user TEXT,
-        nome TEXT,
-        email TEXT
+        titulo TEXT
       );`
     );
   });
 };
 
+
 export const inserirTarefa = (titulo: string) => {
-  db.transaction((tx: any) => {
-    tx.executeSql('INSERT INTO tarefas (titulo) VALUES (?);', [titulo]);
+  const comando = `INSERT INTO tarefas (titulo) VALUES ('${titulo}');`
+  db.withTransactionSync(() => {
+    db.execAsync(comando);
   });
 };
 
 export const listarTarefas = (callback: (tarefas: any[]) => void) => {
-  db.transaction((tx: any) => {
-    tx.executeSql('SELECT * FROM tarefas;', [], (_: any, { rows }: any) => {
-      callback(rows._array);
-    });
-  });
+  const result = db.execSync('SELECT * FROM tarefas;');
+    
+  const tarefas = result[0]?.rows?._array || []; 
+    
+    // Chama o callback com as tarefas
+    callback(tarefas);
 };
