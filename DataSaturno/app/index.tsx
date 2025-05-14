@@ -1,26 +1,61 @@
-import { useState } from 'react'
-import { View, TextInput, Button, Alert } from 'react-native'
-import { cadastrarUsuario } from '../services/users'
+import { Input } from '@/components/Input';
+import { useUsersDatabase } from '@/database/useUsersDatabase';
+import { useState } from 'react';
+import { View, StyleSheet, Button, Alert } from 'react-native';
 
-export default function Cadastro() {
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+export default function Index() {
 
-  const handleCadastro = async () => {
-    const { error } = await cadastrarUsuario(email, senha)
+  const [user, setUser] = useState("")
+  const [nome, setNome] = useState("")
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
+  const [usuario, setUsuarios] = useState([])
 
-    if (error) {
-      Alert.alert('Erro', error.message)
-    } else {
-      Alert.alert('Sucesso', 'Verifique seu e-mail para confirmar o cadastro.')
+  const usersDatabase = useUsersDatabase()
+
+  async function criarUser() {
+    try {
+      const response = await usersDatabase.create({ user, nome, email, senha })
+
+      Alert.alert("Usuário cadastrado com sucesso! ID: " + response.insertedRowId)
+
+    } catch (error: any) {
+
+      if (error.message && error.message.includes('UNIQUE constraint failed: users.user')) {
+        Alert.alert("Usuário existente", "Esse nome de usuário já está em uso.")
+      } else {
+        console.log(error)
+      }
+
+    }
+  }
+
+  async function listarUsers() {
+    try {
+
+    } catch (error) {
+      console.log(error)
     }
   }
 
   return (
-    <View style={{ padding: 20 }}>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} autoCapitalize="none" />
-      <TextInput placeholder="Senha" value={senha} onChangeText={setSenha} secureTextEntry />
-      <Button title="Cadastrar" onPress={handleCadastro} />
+
+    <View style={styles.container}>
+      <Input placeholder="Usuário" onChangeText={setUser} value={user}></Input>
+      <Input placeholder="Nome" onChangeText={setNome} value={nome}></Input>
+      <Input placeholder="Email" onChangeText={setEmail} value={email}></Input>
+      <Input placeholder="Senha" onChangeText={setSenha} value={senha}></Input>
+      <Button title='Criar conta' onPress={criarUser} />
     </View>
+
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 48,
+    gap: 16
+  }
+})

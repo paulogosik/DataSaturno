@@ -1,6 +1,18 @@
-import { HeaderShownContext } from "@react-navigation/elements";
+
+import { initializeDatabase } from "@/database/initializeDatabase";
 import { Stack } from "expo-router";
+import { SQLiteProvider } from 'expo-sqlite'
 
 export default function RootLayout() {
-  return <Stack screenOptions={{headerShown: false}} />;
+  return (
+    <SQLiteProvider databaseName="users.db" onInit={initializeDatabase}>
+      
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      />
+
+    </SQLiteProvider>
+  )
 }
