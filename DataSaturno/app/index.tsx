@@ -17,7 +17,7 @@ export default function Index() {
     try {
       const response = await usersDatabase.create({ user, nome, email, senha })
 
-      Alert.alert("Usuário cadastrado com sucesso! ID: " + response.insertedRowId)
+      Alert.alert("Sucesso", "Usuário criado com êxito!")
 
     } catch (error: any) {
 
