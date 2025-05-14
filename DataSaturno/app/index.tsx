@@ -1,15 +1,26 @@
-import { Text, View } from "react-native";
+import { useState } from 'react'
+import { View, TextInput, Button, Alert } from 'react-native'
+import { cadastrarUsuario } from '../services/users'
 
-export default function Index() {
+export default function Cadastro() {
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+
+  const handleCadastro = async () => {
+    const { error } = await cadastrarUsuario(email, senha)
+
+    if (error) {
+      Alert.alert('Erro', error.message)
+    } else {
+      Alert.alert('Sucesso', 'Verifique seu e-mail para confirmar o cadastro.')
+    }
+  }
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <View style={{ padding: 20 }}>
+      <TextInput placeholder="Email" value={email} onChangeText={setEmail} autoCapitalize="none" />
+      <TextInput placeholder="Senha" value={senha} onChangeText={setSenha} secureTextEntry />
+      <Button title="Cadastrar" onPress={handleCadastro} />
     </View>
-  );
+  )
 }
