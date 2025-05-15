@@ -13,7 +13,7 @@ export function Input({ ...rest }: TextInputProps) {
 const styles = StyleSheet.create({
     textInput: {
         height: 36,
-        borderWidth: 1,
+        borderWidth: 0.2,
         borderColor: "#999",
         borderRadius: 7,
         paddingHorizontal: 16,

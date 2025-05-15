@@ -18,7 +18,7 @@ import {
     Keyboard,
 } from 'react-native';
 import { Link } from 'expo-router';
-
+ 
 export default function Index() {
 
     const [user, setUser] = useState("")
@@ -93,18 +93,15 @@ export default function Index() {
                             <Text style={styles.subtitle}>Crie sua conta para fazer parte desse projeto</Text>
 
                             <Input placeholderTextColor='#A9A9A9' placeholder="Usuário" onChangeText={setUser} value={user} />
-                            <Input placeholderTextColor='#A9A9A9' placeholder="Email" onChangeText={setEmail} value={email} />
-                            <Input placeholderTextColor='#A9A9A9' placeholder="Nome" onChangeText={setNome} value={nome} />
                             <Input placeholderTextColor='#A9A9A9' placeholder="Senha" onChangeText={setSenha} value={senha} secureTextEntry={true} />
-                            <Input placeholderTextColor='#A9A9A9' placeholder="Repita a senha" onChangeText={setSenha2} value={senha2} secureTextEntry={true} />
-
-                            <Link href='./login' asChild>
+                             
+                            <Link href='./criarconta' asChild>
                                 <TouchableOpacity style={styles.buttonLogin} onPress={criarUser}>
-                                    <Text style={styles.textButtonLogin}>Já tem conta? Fazer login</Text>
+                                    <Text style={styles.textButtonLogin}>Não tem conta? Criar conta</Text>
                                 </TouchableOpacity>
                             </Link>
                             <TouchableOpacity style={styles.button} onPress={validarCampos}>
-                                <Text style={styles.textButton}>Criar conta</Text>
+                                <Text style={styles.textButton}>Fazer login</Text>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
