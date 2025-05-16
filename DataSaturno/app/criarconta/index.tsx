@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 import { Link } from 'expo-router';
 
-export default function Index() {
+export default function CriarConta() {
 
     const [user, setUser] = useState("")
     const [nome, setNome] = useState("")
@@ -48,7 +48,7 @@ export default function Index() {
             const salt = await bcrypt.genSalt(10);
             const senhaCriptografada = await bcrypt.hash(senha, salt);
 
-            const response = await usersDatabase.create({ user, nome, email, senha })
+            const response = await usersDatabase.create({ user, nome, email, senha: senhaCriptografada })
             Alert.alert("Sucesso", "Usuário criado com êxito!")
 
         } catch (error: any) {

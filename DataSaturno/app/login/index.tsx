@@ -89,8 +89,8 @@ export default function Index() {
                                 resizeMode='contain'
                                 style={styles.logo}
                             />
-                            <Text style={styles.title}>Bem-vindo ao DataSaturno!</Text>
-                            <Text style={styles.subtitle}>Crie sua conta para fazer parte desse projeto</Text>
+                            <Text style={styles.title}>Bem-vindo de volta!</Text>
+                            <Text style={styles.subtitle}>Entre para acessar a sua conta </Text>
 
                             <Input placeholderTextColor='#A9A9A9' placeholder="Usuário" onChangeText={setUser} value={user} />
                             <Input placeholderTextColor='#A9A9A9' placeholder="Senha" onChangeText={setSenha} value={senha} secureTextEntry={true} />
