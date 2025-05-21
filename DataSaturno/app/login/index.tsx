@@ -1,6 +1,7 @@
 import { Input } from '@/components/Input';
+import { useRouter, Link } from 'expo-router';
 import { useUsersDatabase } from '@/database/useUsersDatabase';
-import { Background } from '@react-navigation/elements';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
 import {
@@ -17,13 +18,13 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
 } from 'react-native';
-import { Link } from 'expo-router';
 
 export default function Index() {
 
+    
     const [user, setUser] = useState("")
     const [senha, setSenha] = useState("")
-
+    const router = useRouter();
     const usersDatabase = useUsersDatabase()
 
     async function login() {
@@ -47,7 +48,15 @@ export default function Index() {
                 return
             }
 
-            Alert.alert("Sucesso", `Bem-vindo, ${validUser.user}`)
+            Alert.alert("Sucesso", 'Seja Bem-vindo!')
+
+            await AsyncStorage.setItem('usuarioLogado', JSON.stringify({
+                user: validUser.user,
+                nome: validUser.nome,
+                email: validUser.email
+            }))
+
+            router.push('/home')
 
 
         } catch (error) {

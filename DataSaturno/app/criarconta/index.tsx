@@ -1,6 +1,5 @@
 import { Input } from '@/components/Input';
 import { useUsersDatabase } from '@/database/useUsersDatabase';
-import { Background } from '@react-navigation/elements';
 import { useState } from 'react';
 import bcrypt from 'react-native-bcrypt';
 import {
@@ -17,17 +16,17 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
 } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 
 export default function CriarConta() {
 
-    const [user, setUser] = useState("")
-    const [nome, setNome] = useState("")
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
-    const [senha2, setSenha2] = useState("")
-
-    const usersDatabase = useUsersDatabase()
+    const [user, setUser] = useState("");
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [senha2, setSenha2] = useState("");
+    const router = useRouter();
+    const usersDatabase = useUsersDatabase();
 
     function validarCampos() {
         if (!user || !nome || !email || !senha || !senha2) {
@@ -54,6 +53,7 @@ export default function CriarConta() {
 
             if (error.message && error.message.includes('UNIQUE constraint failed: users.user')) {
                 Alert.alert("Usuário existente", "Esse nome de usuário já está em uso.")
+                router.push('/home')
             } else {
                 console.log(error)
             }
@@ -90,7 +90,7 @@ export default function CriarConta() {
                             <Input placeholderTextColor='#A9A9A9' placeholder="Repita a senha" onChangeText={setSenha2} value={senha2} secureTextEntry={true} />
 
                             <Link href='./login' asChild>
-                                <TouchableOpacity style={styles.buttonLogin} onPress={criarUser}>
+                                <TouchableOpacity style={styles.buttonLogin}>
                                     <Text style={styles.textButtonLogin}>Já tem conta? Fazer login</Text>
                                 </TouchableOpacity>
                             </Link>
