@@ -1,4 +1,5 @@
 import { useSQLiteContext } from "expo-sqlite"
+import bcrypt from 'bcryptjs'
 
 export type typeUserDatabase = {
     user: string
@@ -36,5 +37,18 @@ export function useUsersDatabase() {
 
     }
 
-    return { create }
+    async function login(user: string, senha: string) {
+
+    }
+
+    async function verificarUser(user: string): Promise<typeUserDatabase | null> {
+        const result = await database.getAllAsync(
+            'SELECT * FROM users WHERE user = ?',
+            [user]
+        )
+
+        return result.length > 0 ? result[0] as typeUserDatabase : null
+    }
+
+    return { create, verificarUser }
 }

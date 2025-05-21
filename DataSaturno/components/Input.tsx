@@ -18,5 +18,6 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         paddingHorizontal: 16,
         color: '#D3D3D3',
+        width: 240
     }
 })

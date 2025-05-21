@@ -2,7 +2,7 @@ import { Input } from '@/components/Input';
 import { useUsersDatabase } from '@/database/useUsersDatabase';
 import { Background } from '@react-navigation/elements';
 import { useState } from 'react';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'react-native-bcrypt';
 import {
     View,
     StyleSheet,
@@ -26,7 +26,6 @@ export default function CriarConta() {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
     const [senha2, setSenha2] = useState("")
-    const [usuario, setUsuarios] = useState([])
 
     const usersDatabase = useUsersDatabase()
 
@@ -45,8 +44,8 @@ export default function CriarConta() {
 
     async function criarUser() {
         try {
-            const salt = await bcrypt.genSalt(10);
-            const senhaCriptografada = await bcrypt.hash(senha, salt);
+            const salt = await bcrypt.genSaltSync(10);
+            const senhaCriptografada = await bcrypt.hashSync(senha, salt);
 
             const response = await usersDatabase.create({ user, nome, email, senha: senhaCriptografada })
             Alert.alert("Sucesso", "Usuário criado com êxito!")
@@ -59,14 +58,6 @@ export default function CriarConta() {
                 console.log(error)
             }
 
-        }
-    }
-
-    async function listarUsers() {
-        try {
-
-        } catch (error) {
-            console.log(error)
         }
     }
 

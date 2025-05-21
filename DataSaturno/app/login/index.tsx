@@ -18,57 +18,45 @@ import {
     Keyboard,
 } from 'react-native';
 import { Link } from 'expo-router';
- 
+
 export default function Index() {
 
     const [user, setUser] = useState("")
-    const [nome, setNome] = useState("")
-    const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
-    const [senha2, setSenha2] = useState("")
-    const [usuario, setUsuarios] = useState([])
 
     const usersDatabase = useUsersDatabase()
 
-    function validarCampos() {
-        if (!user || !nome || !email || !senha || !senha2) {
+    async function login() {
+        if (!user || !senha) {
             Alert.alert("Campos obrigatórios", "Por favor, preencha todos os campos.");
             return;
         }
-        if (senha !== senha2) {
-            Alert.alert("Senhas diferentes", "As senhas digitadas não coincidem.");
-            return;
-        }
 
-        criarUser()
-    }
-
-    async function criarUser() {
         try {
-            const salt = await bcrypt.genSalt(10);
-            const senhaCriptografada = await bcrypt.hash(senha, salt);
+            const validUser = await usersDatabase.verificarUser(user)
 
-            const response = await usersDatabase.create({ user, nome, email, senha })
-            Alert.alert("Sucesso", "Usuário criado com êxito!")
-
-        } catch (error: any) {
-
-            if (error.message && error.message.includes('UNIQUE constraint failed: users.user')) {
-                Alert.alert("Usuário existente", "Esse nome de usuário já está em uso.")
-            } else {
-                console.log(error)
+            if (!validUser) {
+                Alert.alert("Erro", "Usuário não encontrado")
+                return
             }
 
-        }
-    }
+            const senhaConfere = await bcrypt.compare(senha, validUser.senha)
 
-    async function listarUsers() {
-        try {
+            if (!senhaConfere) {
+                Alert.alert("Erro", "Senha incorreta")
+                return
+            }
+
+            Alert.alert("Sucesso", `Bem-vindo, ${validUser.user}`)
+
 
         } catch (error) {
-            console.log(error)
+            console.log("Erro no login:", error)
+            Alert.alert("Erro", "Não foi possível fazer login")
         }
     }
+
+
 
     return (
         <ImageBackground
@@ -90,17 +78,17 @@ export default function Index() {
                                 style={styles.logo}
                             />
                             <Text style={styles.title}>Bem-vindo de volta!</Text>
-                            <Text style={styles.subtitle}>Entre para acessar a sua conta </Text>
+                            <Text style={styles.subtitle}> Entre na sua conta e continue de onde parou! </Text>
 
                             <Input placeholderTextColor='#A9A9A9' placeholder="Usuário" onChangeText={setUser} value={user} />
                             <Input placeholderTextColor='#A9A9A9' placeholder="Senha" onChangeText={setSenha} value={senha} secureTextEntry={true} />
-                             
+
                             <Link href='./criarconta' asChild>
-                                <TouchableOpacity style={styles.buttonLogin} onPress={criarUser}>
+                                <TouchableOpacity style={styles.buttonLogin}>
                                     <Text style={styles.textButtonLogin}>Não tem conta? Criar conta</Text>
                                 </TouchableOpacity>
                             </Link>
-                            <TouchableOpacity style={styles.button} onPress={validarCampos}>
+                            <TouchableOpacity style={styles.button} onPress={login}>
                                 <Text style={styles.textButton}>Fazer login</Text>
                             </TouchableOpacity>
                         </View>
