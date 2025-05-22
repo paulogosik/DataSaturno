@@ -17,6 +17,7 @@ import {
     Keyboard,
 } from 'react-native';
 import { Link, useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CriarConta() {
 
@@ -46,14 +47,27 @@ export default function CriarConta() {
             const salt = await bcrypt.genSaltSync(10);
             const senhaCriptografada = await bcrypt.hashSync(senha, salt);
 
-            const response = await usersDatabase.create({ user, nome, email, senha: senhaCriptografada })
-            Alert.alert("Sucesso", "Usuário criado com êxito!")
+            await usersDatabase.create({ user, nome, email, senha: senhaCriptografada })
+
+            const validUser = await usersDatabase.verificarUser(user)
+
+            if (!validUser) {
+                return
+            }
+
+            await AsyncStorage.setItem('usuarioLogado', JSON.stringify({
+                user: validUser.user,
+                nome: validUser.nome,
+                email: validUser.email
+            }))
+
+            router.push('/home')
 
         } catch (error: any) {
 
             if (error.message && error.message.includes('UNIQUE constraint failed: users.user')) {
                 Alert.alert("Usuário existente", "Esse nome de usuário já está em uso.")
-                router.push('/home')
+                return;
             } else {
                 console.log(error)
             }
@@ -63,7 +77,7 @@ export default function CriarConta() {
 
     return (
         <ImageBackground
-            source={require('@/assets/images/bg.png')}
+            source={{uri: 'https://i.imgur.com/apk98SY.png'}} //bg
             style={styles.background}
             resizeMode='cover'
         >
@@ -76,7 +90,7 @@ export default function CriarConta() {
                     <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>
                             <Image
-                                source={require('@/assets/images/iconapp2.png')}
+                                source={{uri: 'https://i.imgur.com/xyG16Yr.png'}} //iconapp2
                                 resizeMode='contain'
                                 style={styles.logo}
                             />

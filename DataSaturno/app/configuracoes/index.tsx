@@ -1,34 +1,19 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState } from 'react';
-import { useRouter } from 'expo-router';
-
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { HeaderHome } from '@/components/HeaderHome'
-import { FooterHome } from '@/components/FooterHome'
+import { FooterNavigation } from '@/components/FooterNavigation'
 
 export default function Configuracoes() {
-    type Usuario = {
-        user: string;
-        nome: string;
-        email: string;
-    };
-    const [usuario, setUsuario] = useState<Usuario | null>(null);
-    const router = useRouter();
 
-    async function sairDaConta() {
-        await AsyncStorage.removeItem('usuarioLogado')
-        router.push('/login')
-    }
 
     return (
         <View style={styles.container}>
             <HeaderHome />
+            <ScrollView contentContainerStyle={styles.content}>
 
-            <View style={styles.content}>
-                <Text style={styles.text}>Configurações</Text>
-            </View>
+                <Text style={styles.text}>Tela de Configurações</Text>
 
-            <FooterHome />
+            </ScrollView>
+            <FooterNavigation />
         </View>
     );
 }

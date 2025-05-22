@@ -48,8 +48,6 @@ export default function Index() {
                 return
             }
 
-            Alert.alert("Sucesso", 'Seja Bem-vindo!')
-
             await AsyncStorage.setItem('usuarioLogado', JSON.stringify({
                 user: validUser.user,
                 nome: validUser.nome,
@@ -69,7 +67,7 @@ export default function Index() {
 
     return (
         <ImageBackground
-            source={require('@/assets/images/bg.png')}
+            source={{uri: 'https://i.imgur.com/apk98SY.png'}}
             style={styles.background}
             resizeMode='cover'
         >
@@ -82,7 +80,7 @@ export default function Index() {
                     <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>
                             <Image
-                                source={require('@/assets/images/iconapp2.png')}
+                                source={{uri: 'https://i.imgur.com/xyG16Yr.png'}}
                                 resizeMode='contain'
                                 style={styles.logo}
                             />

@@ -26,10 +26,10 @@ export function HeaderHome() {
             <View style={styles.header}>
                 <View style={styles.content}>
                     <Image
-                        source={require('../assets/images/icon2.png')}
+                        source={{uri: 'https://i.imgur.com/H8Z6kHx.png'}} //icon2
                         style={styles.avatar}
                     />
-                    <Text style={styles.headerText}>Olá, {usuario?.nome || 'Visitante'}</Text>
+                    <Text style={styles.headerText}>Olá, {usuario?.nome || 'Visitante'}!</Text>
                 </View>
             </View>
         </SafeAreaView>

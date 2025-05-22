@@ -10,8 +10,12 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
-        }}
-      />
+        }}>
+      <Stack.Screen name="home/index" options={{ animation: 'fade' }} />
+      <Stack.Screen name="configuracoes/index" options={{ animation: 'fade' }} />
+      <Stack.Screen name="login/index" options={{ animation: 'fade' }} />
+      <Stack.Screen name="criarconta/index" options={{ animation: 'fade' }} />
+      </Stack>
 
     </SQLiteProvider>
   )
