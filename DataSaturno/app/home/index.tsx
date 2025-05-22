@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { HeaderHome } from '@/components/HeaderHome'
 import { FooterNavigation } from '@/components/FooterNavigation'
+import { CardWeather } from '@/components/CardWeather'
 
 export default function Home() {
     return (
@@ -8,7 +9,7 @@ export default function Home() {
             <HeaderHome />
             <ScrollView contentContainerStyle={styles.content}>
 
-                <Text style={styles.text}>Tela de Home</Text>
+                <CardWeather />
 
             </ScrollView>
             <FooterNavigation />
@@ -23,10 +24,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     content: {
-        flex: 1,
+        // flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 24,
+        // padding: 24,
     },
     text: {
         color: '#D3D3D3',

@@ -29,7 +29,9 @@ export function HeaderHome() {
                         source={{uri: 'https://i.imgur.com/H8Z6kHx.png'}} //icon2
                         style={styles.avatar}
                     />
-                    <Text style={styles.headerText}>Olá, {usuario?.nome || 'Visitante'}!</Text>
+                    <Text style={styles.headerText}>Olá,</Text>
+                    <Text style={styles.headerName}>{usuario?.nome || 'Visitante'}</Text>
+                    {/* <Text style={styles.headerText}>!</Text> */}
                 </View>
             </View>
         </SafeAreaView>
@@ -56,6 +58,13 @@ const styles = StyleSheet.create({
     },
     headerText: {
         // color: '#553CB0',
+        color: '#d3d3d3',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginHorizontal: -6,
+    },
+    headerName: {
+        // color: '#553CB0',
         color: '#6E4EE3',
         fontSize: 20,
         fontWeight: 'bold',
@@ -64,5 +73,6 @@ const styles = StyleSheet.create({
         width: 24,
         height: 32,
         borderRadius: 16,
+        marginRight: 6,
     },
 });
