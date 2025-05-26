@@ -31,7 +31,6 @@ export function HeaderHome() {
                     />
                     <Text style={styles.headerText}>Olá,</Text>
                     <Text style={styles.headerName}>{usuario?.nome || 'Visitante'}</Text>
-                    {/* <Text style={styles.headerText}>!</Text> */}
                 </View>
             </View>
         </SafeAreaView>
@@ -40,7 +39,7 @@ export function HeaderHome() {
 
 const styles = StyleSheet.create({
     safeArea: {
-        backgroundColor: '#1c1c1c',
+        backgroundColor: 'transparent',
     },
     header: {
         marginTop: 6,
@@ -57,14 +56,12 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     headerText: {
-        // color: '#553CB0',
         color: '#d3d3d3',
         fontSize: 20,
         fontWeight: 'bold',
         marginHorizontal: -6,
     },
     headerName: {
-        // color: '#553CB0',
         color: '#6E4EE3',
         fontSize: 20,
         fontWeight: 'bold',

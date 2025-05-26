@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { HeaderHome } from '@/components/HeaderHome'
 import { FooterNavigation } from '@/components/FooterNavigation'
 import { CardWeather } from '@/components/CardWeather'
@@ -24,20 +24,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     content: {
-        // flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        // padding: 24,
-    },
-    text: {
-        color: '#D3D3D3',
-        alignSelf: 'center',
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    textButton: {
-        color: '#DCDCDC',
-        fontWeight: 'bold',
-        fontSize: 16,
     },
 });
