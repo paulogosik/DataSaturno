@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { HeaderBackHome } from '@/components/HeaderBackHome'
+import { CardWeatherSP } from '@/components/CardWeatherSP';
 
 export default function Weather() {
     return (
@@ -8,6 +9,7 @@ export default function Weather() {
             <ScrollView contentContainerStyle={styles.content}>
 
                 <Text style={styles.title}>Previsão do Tempo</Text>
+                <CardWeatherSP />
 
             </ScrollView>
         </View>
@@ -29,11 +31,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 20,
         fontWeight: 'bold',
-    },
-    textButton: {
-        color: '#DCDCDC',
-        fontWeight: 'bold',
-        fontSize: 16,
     },
     title: {
         color: '#D3D3D3',
