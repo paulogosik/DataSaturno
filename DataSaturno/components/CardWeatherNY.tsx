@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
-export function CardWeatherSP() {
+export function CardWeatherNY() {
     const [weather, setWeather] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
@@ -9,7 +9,7 @@ export function CardWeatherSP() {
         async function fetchWeather() {
             try {
                 const response = await fetch(
-                    'https://api.openweathermap.org/data/2.5/weather?q=Sao Paulo&appid=767190045fa5f85d2eb36cd53d69583e&units=metric&lang=pt_br'
+                    'https://api.openweathermap.org/data/2.5/weather?q=New York&appid=767190045fa5f85d2eb36cd53d69583e&units=metric&lang=pt_br'
                 );
                 const data = await response.json();
                 setWeather(data);

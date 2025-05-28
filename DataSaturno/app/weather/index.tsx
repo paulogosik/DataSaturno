@@ -1,15 +1,24 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { HeaderBackHome } from '@/components/HeaderBackHome'
+import { HeaderBackHome } from '@/components/HeaderBackHome';
 import { CardWeatherSP } from '@/components/CardWeatherSP';
+import { CardWeatherPalmas } from '@/components/CardWeatherPalmas';
+import { CardWeatherLondon } from '@/components/CardWeatherLondon';
+import { CardWeatherNY } from '@/components/CardWeatherNY';
+import { CardWeatherTokyo } from '@/components/CardWeatherTokyo';
 
 export default function Weather() {
     return (
         <View style={styles.container}>
             <HeaderBackHome />
+            <Text style={styles.title}>Previsão do Tempo</Text>
+
             <ScrollView contentContainerStyle={styles.content}>
 
-                <Text style={styles.title}>Previsão do Tempo</Text>
+                <CardWeatherPalmas />
                 <CardWeatherSP />
+                <CardWeatherLondon />
+                <CardWeatherNY />
+                <CardWeatherTokyo />
 
             </ScrollView>
         </View>
@@ -37,5 +46,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '800',
         alignSelf: 'center',
+        marginBottom: 15,
     },
 });
