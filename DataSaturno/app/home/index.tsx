@@ -1,8 +1,8 @@
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { HeaderHome } from '@/components/HeaderHome';
 import { FooterNavigation } from '@/components/FooterNavigation';
-import { CardWeather } from '@/components/CardWeather';
-import { CardNews } from '@/components/CardNews';
+import { CardWeather } from '@/components/CardsWeather/CardWeather';
+import { CardNews } from '@/components/CardsNews/CardNews';
 
 export default function Home() {
     return (

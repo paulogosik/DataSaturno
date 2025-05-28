@@ -1,12 +1,11 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { HeaderBackHome } from '@/components/HeaderBackHome';
+import { HeaderNewsHome } from '@/components/CardsNews/HeaderNewsBack';
 
 export default function News() {
     return (
         <View style={styles.container}>
-            <HeaderBackHome />
-            <Text style={styles.title}>Notícias</Text>
-
+            <HeaderNewsHome />
+            <View style={styles.separator} />
             <ScrollView contentContainerStyle={styles.content}>
 
             </ScrollView>
@@ -36,5 +35,12 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         alignSelf: 'center',
         marginBottom: 15,
+    },
+    separator: {
+        width: '90%',
+        height: 1,
+        backgroundColor: '#333',
+        marginVertical: 15,
+        alignSelf: 'center',
     },
 });

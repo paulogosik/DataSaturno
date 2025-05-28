@@ -1,17 +1,16 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { HeaderBackHome } from '@/components/HeaderBackHome';
-import { CardWeatherSP } from '@/components/CardWeatherSP';
-import { CardWeatherPalmas } from '@/components/CardWeatherPalmas';
-import { CardWeatherLondon } from '@/components/CardWeatherLondon';
-import { CardWeatherNY } from '@/components/CardWeatherNY';
-import { CardWeatherTokyo } from '@/components/CardWeatherTokyo';
+import { HeaderBackHome } from '@/components/CardsWeather/HeaderWeatherBack';
+import { CardWeatherSP } from '@/components/CardsWeather/CardWeatherSP';
+import { CardWeatherPalmas } from '@/components/CardsWeather/CardWeatherPalmas';
+import { CardWeatherLondon } from '@/components/CardsWeather/CardWeatherLondon';
+import { CardWeatherNY } from '@/components/CardsWeather/CardWeatherNY';
+import { CardWeatherTokyo } from '@/components/CardsWeather/CardWeatherTokyo';
 
 export default function Weather() {
     return (
         <View style={styles.container}>
             <HeaderBackHome />
-            <Text style={styles.title}>Previsão do Tempo</Text>
-
+            <View style={styles.separator} />
             <ScrollView contentContainerStyle={styles.content}>
 
                 <CardWeatherPalmas />
@@ -41,11 +40,22 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
     },
+    containerTitle: {
+        backgroundColor: '#0f0f0f',
+        padding: 15,
+        marginBottom: 15,
+    },
     title: {
         color: '#D3D3D3',
         fontSize: 30,
         fontWeight: '800',
         alignSelf: 'center',
-        marginBottom: 15,
+    },
+    separator: {
+        width: '90%',
+        height: 1,
+        backgroundColor: '#333',
+        marginVertical: 15,
+        alignSelf: 'center',
     },
 });
