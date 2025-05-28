@@ -1,7 +1,8 @@
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { HeaderHome } from '@/components/HeaderHome'
-import { FooterNavigation } from '@/components/FooterNavigation'
-import { CardWeather } from '@/components/CardWeather'
+import { HeaderHome } from '@/components/HeaderHome';
+import { FooterNavigation } from '@/components/FooterNavigation';
+import { CardWeather } from '@/components/CardWeather';
+import { CardNews } from '@/components/CardNews';
 
 export default function Home() {
     return (
@@ -10,6 +11,7 @@ export default function Home() {
             <ScrollView contentContainerStyle={styles.content}>
 
                 <CardWeather />
+                <CardNews />
 
             </ScrollView>
             <FooterNavigation />
