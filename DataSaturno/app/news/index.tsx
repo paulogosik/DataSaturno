@@ -1,17 +1,51 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { HeaderNewsHome } from '@/components/CardsNews/HeaderNewsBack';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { ScrollView } from 'react-native-virtualized-view'
+import { HeaderNewsBack } from '@/components/CardsNews/HeaderNewsBack';
 import { CardNewsTech } from '@/components/CardsNews/CardNewsTech';
+import { CardNewsHealth } from '@/components/CardsNews/CardNewsHealth';
+import { CardNewsEconomy } from '@/components/CardsNews/CardNewsEconomy';
+import { useState } from 'react';
 
 export default function News() {
+    const [category, setCategory] = useState<'tech' | 'economy' | 'health'>('tech');
+
+    const renderCard = () => {
+        switch (category) {
+            case 'tech':
+                return <CardNewsTech />;
+            case 'economy':
+                return <CardNewsEconomy />;
+            case 'health':
+                return <CardNewsHealth />;
+            default:
+                return <CardNewsTech />;
+        }
+    };
+
+
     return (
         <View style={styles.container}>
-            <HeaderNewsHome />
+            <HeaderNewsBack />
             <View style={styles.separator} />
+
+            <View style={styles.buttonGroup}>
+                <CategoryButton title="Tecnologia" onPress={() => setCategory('tech')} active={category === 'tech'} />
+                <CategoryButton title="Economia" onPress={() => setCategory('economy')} active={category === 'economy'} />
+                <CategoryButton title="Saúde" onPress={() => setCategory('health')} active={category === 'health'} />
+            </View>
+
             <ScrollView contentContainerStyle={styles.content}>
-                <CardNewsTech />
-                <View style={styles.separator} />
+                {renderCard()}
             </ScrollView>
         </View>
+    );
+}
+
+function CategoryButton({ title, onPress, active }: { title: string; onPress: () => void; active: boolean }) {
+    return (
+        <TouchableOpacity style={[styles.categoryButton, active && styles.activeButton]} onPress={onPress}>
+            <Text style={styles.buttonText}>{title}</Text>
+        </TouchableOpacity>
     );
 }
 
@@ -44,5 +78,24 @@ const styles = StyleSheet.create({
         backgroundColor: '#333',
         marginVertical: 15,
         alignSelf: 'center',
+    },
+    buttonGroup: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginBottom: 5,
+        paddingHorizontal: 10,
+    },
+    categoryButton: {
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: '#333',
+        borderRadius: 20,
+    },
+    activeButton: {
+        backgroundColor: '#6E4EE3',
+    },
+    buttonText: {
+        color: '#d3d3d3',
+        fontWeight: 'bold',
     },
 });

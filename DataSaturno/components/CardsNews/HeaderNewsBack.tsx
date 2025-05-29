@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
-import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 
-export function HeaderNewsHome() {
+export function HeaderNewsBack() {
     const Icon = require('react-native-vector-icons/Feather').default;
     const router = useRouter();
 

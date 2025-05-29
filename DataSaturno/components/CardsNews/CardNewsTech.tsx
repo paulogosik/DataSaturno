@@ -8,8 +8,9 @@ import {
     FlatList,
     Image,
     TouchableOpacity,
-    Linking }
-from 'react-native';
+    Linking
+}
+    from 'react-native';
 
 export function CardNewsTech() {
     const [news, setNews] = useState<any>(null);
@@ -47,7 +48,7 @@ export function CardNewsTech() {
         async function fetchNews() {
             try {
                 const response = await fetch(
-                    `https://newsapi.org/v2/everything?q=Technology OR IA OR Tech OR Tecnologia OR TI&language=pt&sortBy=popularity&from=${lastWeek}&to=${today}&pageSize=5&excludeDomains=b9.com.br&apiKey=eca7fa69ac7848efbb4f0f80149ec156`
+                    `https://newsapi.org/v2/everything?q=Technology OR IA OR Tech OR Tecnologia OR TI&language=pt&sortBy=popularity&from=${lastWeek}&to=${today}&pageSize=8&excludeDomains=b9.com.br&apiKey=eca7fa69ac7848efbb4f0f80149ec156`
                 );
                 const data = await response.json();
                 setNews(data.articles);
@@ -70,8 +71,7 @@ export function CardNewsTech() {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.titlePage}>Notícias Tech</Text>
+        <View style={styles.containerNews}>
 
             <FlatList
                 data={news}
@@ -83,15 +83,15 @@ export function CardNewsTech() {
                             source={{ uri: `${item.urlToImage}` }}
                             style={styles.image}
                         />
-                        <View style={styles.content}>
+                        <View style={styles.contentNews}>
                             <Text style={styles.title}>{item.title}</Text>
                             <Text style={styles.autor}>Autor: {item.author}</Text>
                             <Text style={styles.fonte}>Fonte: {item.source.name}</Text>
                             <Text style={styles.descricao}>{item.description}</Text>
 
                             <View style={styles.containerButton}>
-                                <TouchableOpacity 
-                                    style={styles.button} 
+                                <TouchableOpacity
+                                    style={styles.button}
                                     onPress={() => Linking.openURL(`${item.url}`)}
                                 >
                                     <View style={styles.lineContent}>
@@ -105,27 +105,33 @@ export function CardNewsTech() {
                     </View>
                 )}
             />
-
-
-        </View>
+        </View >
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    containerNews: {
         width: '100%',
         alignItems: 'center',
         marginBottom: 15,
     },
+    content: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    container: {
+        backgroundColor: '#1c1c1c',
+        justifyContent: 'center',
+    },
     card: {
         backgroundColor: '#0f0f0f',
         borderRadius: 12,
-        alignItems: 'center',
         alignSelf: 'center',
         marginBottom: 15,
+        marginTop: 15,
         width: '95%',
     },
-    content: {
+    contentNews: {
         padding: 16
     },
     lineContent: {
@@ -136,7 +142,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '800',
         alignSelf: 'center',
-        marginBottom: 15,
     },
     title: {
         color: '#d3d3d3',
