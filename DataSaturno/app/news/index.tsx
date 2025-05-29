@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { HeaderNewsHome } from '@/components/CardsNews/HeaderNewsBack';
+import { CardNewsTech } from '@/components/CardsNews/CardNewsTech';
 
 export default function News() {
     return (
@@ -7,7 +8,8 @@ export default function News() {
             <HeaderNewsHome />
             <View style={styles.separator} />
             <ScrollView contentContainerStyle={styles.content}>
-
+                <CardNewsTech />
+                <View style={styles.separator} />
             </ScrollView>
         </View>
     );
