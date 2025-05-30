@@ -186,6 +186,6 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     footer: {
-        marginTop: 90
+        marginTop: 600
     },
 });

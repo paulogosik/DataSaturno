@@ -62,7 +62,7 @@ export function CardNewsTech() {
     if (loading) {
         return <ActivityIndicator size="small" color="#8A2BE2" />;
     }
-    
+
     if (!news || news.status == 'error') {
         return <Text style={styles.titlePage}>Erro ao carregar notícias</Text>;
     }
@@ -186,6 +186,6 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     footer: {
-        marginTop: 90
+        marginTop: 600
     },
 });
