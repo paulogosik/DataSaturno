@@ -1,4 +1,3 @@
-import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
     View,
@@ -15,9 +14,7 @@ import {
 export function CardNewsHealth() {
     const [news, setNews] = useState<any>(null);
     const [loading, setLoading] = useState(true);
-
     const Icon = require('react-native-vector-icons/Feather').default;
-    const router = useRouter();
 
     function dateLastWeek() {
         const today = new Date();
@@ -48,7 +45,7 @@ export function CardNewsHealth() {
         async function fetchNews() {
             try {
                 const response = await fetch(
-                    `https://newsapi.org/v2/everything?q=Saude OR Saúde OR Medicina&language=pt&from=${lastWeek}&to=${today}&pageSize=8&excludeDomains=b9.com.br&apiKey=eca7fa69ac7848efbb4f0f80149ec156`
+                    `https://newsapi.org/v2/everything?q=Saúde OR Medicina OR Hospital OR SUS&language=pt&sortBy=relevancy&from=${lastWeek}&to=${today}&apiKey=eca7fa69ac7848efbb4f0f80149ec156`
                 );
                 const data = await response.json();
                 setNews(data.articles);
@@ -66,7 +63,7 @@ export function CardNewsHealth() {
         return <ActivityIndicator size="small" color="#8A2BE2" />;
     }
 
-    if (!news || news.totalResults == 0) {
+    if (!news || news.status == 'error') {
         return <Text style={styles.titlePage}>Erro ao carregar notícias</Text>;
     }
 
@@ -74,36 +71,40 @@ export function CardNewsHealth() {
         <View style={styles.containerNews}>
 
             <FlatList
+                scrollEnabled={false}
                 data={news}
-                keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
 
-                    <View style={styles.card}>
-                        <Image
-                            source={{ uri: `${item.urlToImage}` }}
-                            style={styles.image}
-                        />
-                        <View style={styles.contentNews}>
-                            <Text style={styles.title}>{item.title}</Text>
-                            <Text style={styles.autor}>Autor: {item.author}</Text>
-                            <Text style={styles.fonte}>Fonte: {item.source.name}</Text>
-                            <Text style={styles.descricao}>{item.description}</Text>
+                    <View>
+                        <View style={styles.card}>
+                            <Image
+                                source={{ uri: `${item.urlToImage}` }}
+                                style={styles.image}
+                            />
+                            <View style={styles.contentNews}>
+                                <Text style={styles.title}>{item.title}</Text>
+                                <Text style={styles.autor}>Autor: {item.author}</Text>
+                                <Text style={styles.fonte}>Fonte: {item.source.name}</Text>
+                                <Text style={styles.descricao}>{item.description}</Text>
 
-                            <View style={styles.containerButton}>
-                                <TouchableOpacity
-                                    style={styles.button}
-                                    onPress={() => Linking.openURL(`${item.url}`)}
-                                >
-                                    <View style={styles.lineContent}>
-                                        <Text style={styles.textButton}>Ver notícia completa  </Text>
-                                        <Icon name="external-link" size={18} color={'#d3d3d3'} />
-                                    </View>
-                                </TouchableOpacity>
+                                <View style={styles.containerButton}>
+                                    <TouchableOpacity
+                                        style={styles.button}
+                                        onPress={() => Linking.openURL(`${item.url}`)}
+                                    >
+                                        <View style={styles.lineContent}>
+                                            <Text style={styles.textButton}>Ver notícia completa  </Text>
+                                            <Icon name="external-link" size={18} color={'#d3d3d3'} />
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-
                         </View>
                     </View>
                 )}
+                ListFooterComponent={
+                    <View style={styles.footer}></View>
+                }
             />
         </View >
     );
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
     containerNews: {
         width: '100%',
         alignItems: 'center',
+        marginTop: 15,
     },
     content: {
         justifyContent: 'center',
@@ -127,7 +129,6 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         alignSelf: 'center',
         marginBottom: 15,
-        marginTop: 15,
         width: '95%',
     },
     contentNews: {
@@ -183,5 +184,8 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 8,
         borderRadius: 8,
+    },
+    footer: {
+        marginTop: 90
     },
 });

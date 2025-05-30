@@ -1,10 +1,17 @@
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { ScrollView } from 'react-native-virtualized-view'
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { HeaderNewsBack } from '@/components/CardsNews/HeaderNewsBack';
 import { CardNewsTech } from '@/components/CardsNews/CardNewsTech';
 import { CardNewsHealth } from '@/components/CardsNews/CardNewsHealth';
 import { CardNewsEconomy } from '@/components/CardsNews/CardNewsEconomy';
 import { useState } from 'react';
+
+function CategoryButton({ title, onPress, active }: { title: string; onPress: () => void; active: boolean }) {
+    return (
+        <TouchableOpacity style={[styles.categoryButton, active && styles.activeButton]} onPress={onPress}>
+            <Text style={styles.buttonText}>{title}</Text>
+        </TouchableOpacity>
+    );
+}
 
 export default function News() {
     const [category, setCategory] = useState<'tech' | 'economy' | 'health'>('tech');
@@ -38,14 +45,6 @@ export default function News() {
                 {renderCard()}
             </ScrollView>
         </View>
-    );
-}
-
-function CategoryButton({ title, onPress, active }: { title: string; onPress: () => void; active: boolean }) {
-    return (
-        <TouchableOpacity style={[styles.categoryButton, active && styles.activeButton]} onPress={onPress}>
-            <Text style={styles.buttonText}>{title}</Text>
-        </TouchableOpacity>
     );
 }
 

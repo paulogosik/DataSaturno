@@ -12,7 +12,7 @@ export default function Home() {
 
                 <CardWeather />
                 <CardNews />
-
+                
             </ScrollView>
             <FooterNavigation />
         </View>
