@@ -97,4 +97,10 @@ const styles = StyleSheet.create({
         color: '#d3d3d3',
         fontWeight: 'bold',
     },
+    button: {
+        backgroundColor: '#6E4EE3',
+        padding: 10,
+        paddingHorizontal: 20,
+        borderRadius: 18,
+    },
 });

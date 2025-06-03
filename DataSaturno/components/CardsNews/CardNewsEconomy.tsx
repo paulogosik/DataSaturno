@@ -59,13 +59,8 @@ export function CardNewsEconomy() {
         fetchNews();
     }, []);
 
-    if (loading) {
-        return <ActivityIndicator size="small" color="#8A2BE2" />;
-    }
-
-    if (!news || news.status == 'error') {
-        return <Text style={styles.titlePage}>Erro ao carregar notícias</Text>;
-    }
+    if (loading) { return <ActivityIndicator size="small" color="#8A2BE2" />; }
+    if (!news || news.status == 'error') { return <Text style={styles.titlePage}>Erro ao carregar notícias</Text>; }
 
     return (
         <View style={styles.containerNews}>
@@ -115,14 +110,6 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         marginTop: 15,
-    },
-    content: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    container: {
-        backgroundColor: '#1c1c1c',
-        justifyContent: 'center',
     },
     card: {
         backgroundColor: '#0f0f0f',

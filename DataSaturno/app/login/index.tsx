@@ -17,22 +17,24 @@ import {
     ScrollView,
     TouchableWithoutFeedback,
     Keyboard,
+    ActivityIndicator,
 } from 'react-native';
 
 export default function Index() {
-
-    
     const [user, setUser] = useState("")
     const [senha, setSenha] = useState("")
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const usersDatabase = useUsersDatabase()
 
     async function login() {
+
         if (!user || !senha) {
             Alert.alert("Campos obrigatórios", "Por favor, preencha todos os campos.");
             return;
         }
 
+        setLoading(true);
         try {
             const validUser = await usersDatabase.verificarUser(user)
 
@@ -60,6 +62,8 @@ export default function Index() {
         } catch (error) {
             console.log("Erro no login:", error)
             Alert.alert("Erro", "Não foi possível fazer login")
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -67,7 +71,7 @@ export default function Index() {
 
     return (
         <ImageBackground
-            source={{uri: 'https://i.imgur.com/apk98SY.png'}}
+            source={{ uri: 'https://i.imgur.com/apk98SY.png' }}
             style={styles.background}
             resizeMode='cover'
         >
@@ -80,7 +84,7 @@ export default function Index() {
                     <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>
                             <Image
-                                source={{uri: 'https://i.imgur.com/xyG16Yr.png'}}
+                                source={{ uri: 'https://i.imgur.com/xyG16Yr.png' }}
                                 resizeMode='contain'
                                 style={styles.logo}
                             />
@@ -95,9 +99,11 @@ export default function Index() {
                                     <Text style={styles.textButtonLogin}>Não tem conta? Criar conta</Text>
                                 </TouchableOpacity>
                             </Link>
-                            <TouchableOpacity style={styles.button} onPress={login}>
-                                <Text style={styles.textButton}>Fazer login</Text>
-                            </TouchableOpacity>
+                            {loading ? (<ActivityIndicator size="small" color="#8A2BE2" />) : (
+                                <TouchableOpacity style={styles.button} onPress={login}>
+                                    <Text style={styles.textButton}>Fazer login</Text>
+                                </TouchableOpacity>
+                            )}
                         </View>
                     </ScrollView>
                 </TouchableWithoutFeedback>
@@ -122,6 +128,9 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         width: '100%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#1C1C1C',
         borderRadius: 12,
         padding: 24,
@@ -148,6 +157,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#8A2BE2',
         borderRadius: 7,
         paddingVertical: 10,
+        width: '100%',
     },
     textButton: {
         color: '#DCDCDC',

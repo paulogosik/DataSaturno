@@ -20,7 +20,6 @@ import { Link, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CriarConta() {
-
     const [user, setUser] = useState("");
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
@@ -38,7 +37,6 @@ export default function CriarConta() {
             Alert.alert("Senhas diferentes", "As senhas digitadas não coincidem.");
             return;
         }
-
         criarUser()
     }
 
@@ -48,7 +46,6 @@ export default function CriarConta() {
             const senhaCriptografada = await bcrypt.hashSync(senha, salt);
 
             await usersDatabase.create({ user, nome, email, senha: senhaCriptografada })
-
             const validUser = await usersDatabase.verificarUser(user)
 
             if (!validUser) {
@@ -60,18 +57,14 @@ export default function CriarConta() {
                 nome: validUser.nome,
                 email: validUser.email
             }))
-
             router.push('/home')
-
         } catch (error: any) {
-
             if (error.message && error.message.includes('UNIQUE constraint failed: users.user')) {
                 Alert.alert("Usuário existente", "Esse nome de usuário já está em uso.")
                 return;
             } else {
                 console.log(error)
             }
-
         }
     }
 
