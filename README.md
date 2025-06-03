@@ -19,10 +19,6 @@ Este projeto é um aplicativo mobile desenvolvido com **React Native** e **Expo*
 - [React Navigation](https://reactnavigation.org/)
 - [TypeScript](https://www.typescriptlang.org/) *(opcional)*
 
-///## 📷 Tela de login
-
-///![Logo](https://i.imgur.com/xyG16Yr.png)
-
 ## 🚀 Como executar
 
 1. Clone o repositório:
@@ -30,3 +26,13 @@ Este projeto é um aplicativo mobile desenvolvido com **React Native** e **Expo*
    git clone https://github.com/seu-usuario/seu-repositorio.git
    cd seu-repositorio
    ```
+   
+2. Instale as dependências:
+```bash
+npm install
+```
+
+3. Inicie o projeto:
+```bash
+npx expo start
+```
