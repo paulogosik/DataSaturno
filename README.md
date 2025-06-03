@@ -1,4 +1,4 @@
-# DataSaturno 🪐:
+# DataSaturno 🪐
 Este projeto é um aplicativo mobile desenvolvido com **React Native** e **Expo**, que implementa um sistema de autenticação simples com **armazenamento local de usuários** utilizando `AsyncStorage`. A autenticação protege as rotas e garante que apenas usuários válidos consigam acessar a área interna da aplicação.
 
 ## ✨ Funcionalidades
