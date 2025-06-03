@@ -19,9 +19,9 @@ Este projeto é um aplicativo mobile desenvolvido com **React Native** e **Expo*
 - [React Navigation](https://reactnavigation.org/)
 - [TypeScript](https://www.typescriptlang.org/) *(opcional)*
 
-## 📷 Tela de login
+///## 📷 Tela de login
 
-![Logo](https://i.imgur.com/xyG16Yr.png)
+///![Logo](https://i.imgur.com/xyG16Yr.png)
 
 ## 🚀 Como executar
 
