@@ -13,11 +13,11 @@ Este projeto é um aplicativo mobile desenvolvido com **React Native** e **Expo*
 ## 🛠️ Tecnologias utilizadas
 
 - [React Native](https://reactnative.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [Expo](https://expo.dev/)
 - [AsyncStorage](https://react-native-async-storage.github.io/async-storage/)
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs)
 - [React Navigation](https://reactnavigation.org/)
-- [TypeScript](https://www.typescriptlang.org/) *(opcional)*
 
 ## 🚀 Como executar
 
