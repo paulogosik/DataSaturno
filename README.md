@@ -28,11 +28,11 @@ Este projeto é um aplicativo mobile desenvolvido com **React Native** e **Expo*
    ```
    
 2. Instale as dependências:
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
 3. Inicie o projeto:
-```bash
-npx expo start
-```
+   ```bash
+   npx expo start
+   ```
