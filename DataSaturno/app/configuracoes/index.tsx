@@ -10,7 +10,7 @@ export default function Configuracoes() {
             <HeaderHome />
             <ScrollView contentContainerStyle={styles.content}>
 
-                <Text style={styles.text}>Tela de Configurações</Text>
+                <Text style={styles.text}>Teste</Text>
 
             </ScrollView>
             <FooterNavigation />
@@ -35,16 +35,5 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 20,
         fontWeight: 'bold',
-    },
-    button: {
-        alignItems: 'center',
-        backgroundColor: '#8A2BE2',
-        borderRadius: 7,
-        paddingVertical: 10,
-    },
-    textButton: {
-        color: '#DCDCDC',
-        fontWeight: 'bold',
-        fontSize: 16,
     },
 });
