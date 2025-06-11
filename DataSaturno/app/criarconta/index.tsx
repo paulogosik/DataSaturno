@@ -15,9 +15,11 @@ import {
     ScrollView,
     TouchableWithoutFeedback,
     Keyboard,
+    ActivityIndicator,
 } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { supabase } from '@/services/supabase';
 
 export default function CriarConta() {
     const [user, setUser] = useState("");
@@ -25,8 +27,8 @@ export default function CriarConta() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [senha2, setSenha2] = useState("");
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const usersDatabase = useUsersDatabase();
 
     function validarCampos() {
         if (!user || !nome || !email || !senha || !senha2) {
@@ -37,40 +39,53 @@ export default function CriarConta() {
             Alert.alert("Senhas diferentes", "As senhas digitadas não coincidem.");
             return;
         }
-        criarUser()
+        handleCreateAccount(user, nome, email, senha);
     }
 
-    async function criarUser() {
+    const handleCreateAccount = async (user: string, name: string, email: string, password: string) => {
+        setLoading(true);
         try {
-            const salt = await bcrypt.genSaltSync(10);
-            const senhaCriptografada = await bcrypt.hashSync(senha, salt);
+            const salt = bcrypt.genSaltSync(10);
+            const encryptedPassword = bcrypt.hashSync(password, salt);
+            const { data, error } = await supabase
+                .from("users")
+                .insert({
+                    user: user,
+                    name: name,
+                    email: email,
+                    password: encryptedPassword
+                })
+                .select();
 
-            await usersDatabase.create({ user, nome, email, senha: senhaCriptografada })
-            const validUser = await usersDatabase.verificarUser(user)
-
-            if (!validUser) {
-                return
+            if (error) {
+                throw error;
             }
 
             await AsyncStorage.setItem('usuarioLogado', JSON.stringify({
-                user: validUser.user,
-                nome: validUser.nome,
-                email: validUser.email
+                user: user,
+                nome: nome,
+                email: email
             }))
             router.push('/home')
-        } catch (error: any) {
-            if (error.message && error.message.includes('UNIQUE constraint failed: users.user')) {
-                Alert.alert("Usuário existente", "Esse nome de usuário já está em uso.")
-                return;
+
+            console.log('Usuário criado com sucesso:', data);
+            return data;
+        }
+        catch (error: any) {
+            if (error.message && error.message.includes('duplicate key value violates unique constraint')) {
+                Alert.alert("Usuário existente", "Esse nome de usuário já está em uso.");
             } else {
-                console.log(error)
+                console.error('Erro ao criar conta:', error);
+                Alert.alert("Erro", "Ocorreu um erro ao criar a conta.");
             }
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <ImageBackground
-            source={{uri: 'https://i.imgur.com/apk98SY.png'}} //bg
+            source={{ uri: 'https://i.imgur.com/apk98SY.png' }}
             style={styles.background}
             resizeMode='cover'
         >
@@ -83,7 +98,7 @@ export default function CriarConta() {
                     <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>
                             <Image
-                                source={{uri: 'https://i.imgur.com/xyG16Yr.png'}} //iconapp2
+                                source={{ uri: 'https://i.imgur.com/xyG16Yr.png' }}
                                 resizeMode='contain'
                                 style={styles.logo}
                             />
@@ -101,9 +116,11 @@ export default function CriarConta() {
                                     <Text style={styles.textButtonLogin}>Já tem conta? Fazer login</Text>
                                 </TouchableOpacity>
                             </Link>
-                            <TouchableOpacity style={styles.button} onPress={validarCampos}>
-                                <Text style={styles.textButton}>Criar conta</Text>
-                            </TouchableOpacity>
+                            {loading ? (<ActivityIndicator size="small" color="#8A2BE2" />) : (
+                                <TouchableOpacity style={styles.button} onPress={validarCampos || setLoading(true)}>
+                                    <Text style={styles.textButton}>Criar conta</Text>
+                                </TouchableOpacity>
+                            )}
                         </View>
                     </ScrollView>
                 </TouchableWithoutFeedback>

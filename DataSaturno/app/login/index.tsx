@@ -2,7 +2,7 @@ import { Input } from '@/components/Input';
 import { useRouter, Link } from 'expo-router';
 import { useUsersDatabase } from '@/database/useUsersDatabase';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState } from 'react';
+import { act, useState } from 'react';
 import bcrypt from 'bcryptjs';
 import {
     View,
@@ -19,55 +19,46 @@ import {
     Keyboard,
     ActivityIndicator,
 } from 'react-native';
+import { supabase } from '@/services/supabase';
 
 export default function Index() {
     const [user, setUser] = useState("")
     const [senha, setSenha] = useState("")
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const usersDatabase = useUsersDatabase()
 
-    async function login() {
-
-        if (!user || !senha) {
-            Alert.alert("Campos obrigatórios", "Por favor, preencha todos os campos.");
-            return;
-        }
-
+    const handleLogin = async (user: string, password: string) => {
         setLoading(true);
         try {
-            const validUser = await usersDatabase.verificarUser(user)
+            const { data: actualUser, error } = await supabase
+                .from('users')
+                .select('*')
+                .eq('user', user)
+                .single();
 
-            if (!validUser) {
-                Alert.alert("Erro", "Usuário não encontrado")
-                return
+            if (error || !user) {
+                throw new Error("Usuário não cadastrado");
             }
 
-            const senhaConfere = await bcrypt.compare(senha, validUser.senha)
+            const isPasswordValid = await bcrypt.compare(password, actualUser.password);
 
-            if (!senhaConfere) {
-                Alert.alert("Erro", "Senha incorreta")
-                return
+            if (!isPasswordValid) {
+                throw new Error("Senha incorreta");
             }
 
             await AsyncStorage.setItem('usuarioLogado', JSON.stringify({
-                user: validUser.user,
-                nome: validUser.nome,
-                email: validUser.email
+                user: actualUser["user"],
+                nome: actualUser["name"],
+                email: actualUser["email"]
             }))
 
             router.push('/home')
 
-
-        } catch (error) {
-            console.log("Erro no login:", error)
-            Alert.alert("Erro", "Não foi possível fazer login")
-        } finally {
-            setLoading(false);
-        }
+        } catch (error: any) {
+            Alert.alert("Erro", error.message);
+            return null;
+        } setLoading(false);
     }
-
-
 
     return (
         <ImageBackground
@@ -100,7 +91,7 @@ export default function Index() {
                                 </TouchableOpacity>
                             </Link>
                             {loading ? (<ActivityIndicator size="small" color="#8A2BE2" />) : (
-                                <TouchableOpacity style={styles.button} onPress={login}>
+                                <TouchableOpacity style={styles.button} onPress={() => handleLogin(user, senha)}>
                                     <Text style={styles.textButton}>Fazer login</Text>
                                 </TouchableOpacity>
                             )}

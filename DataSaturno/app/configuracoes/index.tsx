@@ -1,12 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { HeaderHome } from '@/components/HeaderHome'
 import { FooterNavigation } from '@/components/FooterNavigation'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Configuracoes() {
-
-
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <HeaderHome />
             <ScrollView contentContainerStyle={styles.content}>
 
@@ -14,7 +13,7 @@ export default function Configuracoes() {
 
             </ScrollView>
             <FooterNavigation />
-        </View>
+        </SafeAreaView>
     );
 }
 
